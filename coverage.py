@@ -29,7 +29,6 @@ class Coverage():
         self.updateNodePrototype     = self.updateASTPrototype.body[0]
 
 
-
     def buildInstrumentedASTBody(self, astBody):
         """
             This code loops through a given ast body and
