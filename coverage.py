@@ -10,6 +10,8 @@ class Coverage():
         self.declareTrackerVariables()
         self.declareUpdateStatementPrototype()
 
+        self.instrumentEntireASTBody()
+
 
     def declareASTBodies(self, inputCode):
         self.originalAST     = ast.parse(inputCode)
@@ -29,6 +31,10 @@ class Coverage():
 
 
     def buildInstrumentedASTBody(self, astBody):
+        """
+            This code loops through a given ast body and
+            instruments it.
+        """
 
         instrumentedBody    = []
         for node in astBody:
@@ -50,8 +56,13 @@ class Coverage():
         self.originalAST.body= self.originalASTBody
 
 
-    def runInstrumentedAST(self):
-        exec compile(self.originalAST, '', 'exec')
+    def runInstrumentedAST(self, testCase={}):
+
+        locals().update(testCase)
+        try:
+            exec compile(self.originalAST, '', 'exec')
+        except Exception, message:
+            print "Error Detected : {0}".format(repr(message))
 
 
     def getPathSignature(self):
@@ -62,27 +73,15 @@ class Coverage():
         print self.pathSignature
 
 
-class CoverageManager():
-
-    def __init__(self, inputCode):
-        self.inputCode = inputCode
-
-
-    def processCoverage(self):
-        coverage = Coverage(self.inputCode)
-        coverage.instrumentEntireASTBody()
-        coverage.runInstrumentedAST()
-        return coverage
-
 
 inputCode = """
-i=0
-while i < 5:
-    a=1
-    b=2
-    i+=1
+z=2*y
+if z==x:
+    if x>y+10:
+        assert False
 """
+testCase = {"x":1, "y":0}
 
-
-codeCoverage = CoverageManager(inputCode).processCoverage()
-codeCoverage.printPathSignature()
+coverage = Coverage(inputCode)
+coverage.runInstrumentedAST(testCase)
+coverage.printPathSignature()
