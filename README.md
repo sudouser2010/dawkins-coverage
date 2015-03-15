@@ -21,7 +21,7 @@ Dawkins-Coverage
     (4) For each statement in the AST, Dawkins-Coverage does the following:
         
         (a) inserts an additional statement that when executed, appends the 
-        statementId to the pathSignature
+            statementId to the pathSignature
         (b) increments the statementId
 
 
