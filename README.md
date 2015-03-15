@@ -20,13 +20,16 @@ Dawkins-Coverage
     (4) Dawkins-Coverage instruments the AST
     (5) For each statement in the AST, Dawkins-Coverage does the following:
         
-        (a) inserts an additional statement that when executed, appends the statementId to the pathSignature
+        (a) inserts an additional statement that when executed, appends the 
+        statementId to the pathSignature
         (b) increments the statementId
 
 
 ##High Level Design 
-    -The idea is that every statement in the input code has a unique identifier represented by the statementId
-    -When the instrumented code is executed, it appends its statementId to the pathSignature
+    -The idea is that every statement in the input code has a unique identifier 
+    represented by the statementId
+    -When the instrumented code is executed, it appends its statementId to the 
+    pathSignature
     -Each program execution path corresponds to a unique pathSignature.
 
 
